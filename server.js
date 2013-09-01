@@ -29,6 +29,7 @@ app.get('/', function (req, res) {
 
 app.get('/githook', function (req, res) {
 	res.send("Githooked!");
+	// XX pull.sh
 });
 
 app.listen(app.get('port'));
