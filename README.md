@@ -3,4 +3,6 @@ PushBerry
 
 Automated `git pull` from Github to your Raspberry Pi.
 
-Make sure to setup your ssh key beforehand.
+1. Set up a service hook for your Github repository.
+2. Make sure ssh is working correctly on your Pi.
+
