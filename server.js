@@ -27,9 +27,12 @@ app.get('/', function (req, res) {
 	res.send("Hello World!");
 });
 
-app.get('/githook', function (req, res) {
+app.post('/githook', function (req, res) {
+	console.log('Git hook received');
 	res.send("Githooked!");
 	// XX pull.sh
+	var exec = require('child_process').exec;
+	exec("sh pull.sh", function () {});
 });
 
 app.listen(app.get('port'));
