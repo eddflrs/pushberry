@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pushberry Demo</title>
+</head>
+<body>
+  <!--
+  <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+  -->
+  <script>
+    var wsUri = "localhost:8888/connect";
+
+    // var ws = new SockJS("http://"  + wsUri);
+    var ws = new WebSocket("ws://" + wsUri + "/websocket");
+
+    ws.onopen = function () {
+      console.log("opened");
+      ws.send("Goooop");
+      console.log("sent");
+    };
+
+    ws.onmessage = function (msg) {
+      console.log("Got a message", JSON.parse(msg));
+    };
+  </script>
+
+</body>
+</html>

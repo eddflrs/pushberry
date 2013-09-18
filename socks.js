@@ -2,13 +2,14 @@
 
 var socks = {}
   , conns = {} // id => {Sockjs Connection}
-  ;
 
-socks.connect = function (msg) {
-  console.log('connect called with msg: ', msg);
-  var json = JSON.parse(msg);
-  console.log('connect called with json: ', json);
-  console.log('connect with ', this);
+socks.onConnection = function (conn) {
+  console.log('connection established.');
+  conn.on('data', socks.onData);
+};
+
+socks.onData = function (msg) {
+  console.log("got that data", msg);
 };
 
 socks.disconnect = function (msg) {
