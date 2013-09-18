@@ -1,0 +1,25 @@
+{
+  "name": "pushberry",
+  "version": "0.0.1",
+  "description": "Automated code syncs from GitHub to your Raspberry Pi.",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~3.3.8",
+    "jade": "~0.35.0",
+    "passport": "~0.1.17",
+    "sockjs": "~0.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eddflrs/pushberry.git"
+  },
+  "author": "Eddie Flores",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eddflrs/pushberry/issues"
+  }
+}
