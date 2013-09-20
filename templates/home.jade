@@ -3,6 +3,27 @@ extends layout
 block title
   title Hello
 
+block indie
+
+  div.jumbotron
+    div.container
+      h1 Pushberry
+      p Automated code syncing from GitHub to your Raspberry Pi
+      a.btn.btn-primary#github-signin
+        i.icon.icon-github
+        |  Sign in with GitHub 
+
 block content
-  h1 Pushberry
-  p.lead-description Automated code syncing from GitHub to your Raspberry Pi
+    h2 How it Works
+    div.col-md-3.page-header
+      h3 1 
+        small Login with GitHub
+    div.col-md-3.page-header
+      h3 2 
+        small Run Pushberry on your Pi
+    div.col-md-3.page-header
+      h3 3 
+        small Push Code to GitHub
+    div.col-md-3.page-header
+      h3 4 
+        small Watch the syncing happen!
