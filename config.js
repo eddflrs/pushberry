@@ -1,7 +1,7 @@
 exports.mongodb = {
 
   uri: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL,
-  
+
 };
 
 exports.GITHUB_CLIENT_ID = "9a40c9e1107109f859a7";

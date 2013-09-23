@@ -1,12 +1,14 @@
 {
   "name": "pushberry",
   "version": "0.0.1",
-  "description": "Automated code syncs from GitHub to your Raspberry Pi.",
+  "description": "PushBerry =========",
   "main": "app.js",
   "dependencies": {
-    "express": "~3.3.8",
     "jade": "~0.35.0",
+    "express": "~3.4.0",
+    "mongoose": "~3.6.19",
     "passport": "~0.1.17",
+    "passport-github": "~0.1.5",
     "sockjs": "~0.3.7"
   },
   "devDependencies": {},
@@ -17,8 +19,8 @@
     "type": "git",
     "url": "git://github.com/eddflrs/pushberry.git"
   },
-  "author": "Eddie Flores",
-  "license": "MIT",
+  "author": "",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/eddflrs/pushberry/issues"
   }

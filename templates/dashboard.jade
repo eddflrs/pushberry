@@ -1,0 +1,32 @@
+extends layout
+
+block styles
+  link(rel="stylesheet", type="text/css", href="inner.css")
+
+block indie
+  header.navbar.navbar-default.navbar-fixed-top(role="banner")
+    div.container
+      div.navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".bs-navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href="/") Pushberry
+      nav.collapse.navbar-collapse.bs-navbar-collapse(role="navigation")
+        ul.nav.navbar-nav.pull-right
+          li
+            a(href="/logout") Sign out
+
+block title
+  title Your Dash
+
+block content
+  div.row
+    h1.text-center Hey, welcome back
+      span.blue-emphasis . 
+  div.row
+    h4.text-center Your GitHub Projects
+    a.btn.btn-primary#get-github-repos
+      span.glyphicon.glyphicon-refresh 
+      |    GitHub Repos

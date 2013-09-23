@@ -11,3 +11,8 @@
   position: relative;
   top: 3px;
 }
+
+.blue-emphasis {
+  color: #3E85C3;
+  font-weight: bold;
+}

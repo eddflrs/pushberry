@@ -1,8 +1,20 @@
 var routes = {};
 
 routes.home = function (req, res) {
-  console.log("home to be rendered");
-  res.render("home");
+  if (req.user) {
+    return res.redirect('/dash');
+  }
+  res.render('home');
+};
+
+routes.dashboard = function (req, res) {
+  function prepUserData (user) {
+    user.firstName = req.user.profile.displayName.split(' ')[0];
+  }
+
+  console.log("Request user: ", req.user);
+  prepUserData(req.user);
+  res.render('dashboard', { user: req.user });
 };
 
 routes.githook = function (req, res) {
@@ -15,16 +27,21 @@ routes.loginWithGithub = function (req, res) {
 
 routes.loginWithGithubCb = function (req, res) {
   console.log("loginwith github ok");
+  res.cookie('accessToken', req.user.accessToken);
   res.redirect('/login/success');
 }
 
 routes.loginSuccess = function (req, res) {
-  console.log("login success");
   res.render("loginSuccess");
+}
+
+routes.loginFailure = function (req, res) {
+  console.log("Failed to login");
+  res.redirect('/');
 }
 
 routes.logout = function (req, res) {
   req.logout();
-  res.redirect();
+  res.redirect('/');
 }
 module.exports = routes;

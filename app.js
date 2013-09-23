@@ -10,7 +10,7 @@ var express = require('express')
   , socks = require('./socks.js')
   , config = require('./config.js')
   , models = require('./models.js')
-  
+
 var GITHUB_CLIENT_ID = config.GITHUB_CLIENT_ID
   , GITHUB_CLIENT_SECRET = config.GITHUB_CLIENT_SECRET
 
@@ -21,42 +21,6 @@ var app = express()
   // , db = mongoose.createConnection(config.mongodb.uri)
   , db = mongoose.createConnection()
   , models = models(db, mongoose)
-
-db.on('error', console.error.bind(console, 'mongoose conn error: '));
-db.once('open', function () {
-  console.log("Data store open");
-});
-
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function (obj, done) {
-  done(null, obj);
-});
-
-passport.use(new GithubStrategy({
-  clientID: GITHUB_CLIENT_ID,
-  clientSecret: GITHUB_CLIENT_SECRET,
-  callbackUrl: "http://" + process.env.IP + ":" + process.env.PORT + "/auth/github/cb"
-}, function (accessToken, refreshToken, profile, done) {
-    console.log("access token? ", accessToken);
-    process.nextTick(function () {
-      
-      // To keep the example simple, the user's GitHub profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the GitHub account with a user record in your database,
-      // and return that user instead.
-      /*
-      User.findOrCreate({ githubId: profile.id }, function (err, user) {
-        return done(err, user);
-      });
-      */
-      
-      return done(null, profile);      
-    });
-  }
-));
 
 app.configure(function () {
   app.engine('jade', jade.__express);
@@ -76,12 +40,53 @@ app.configure(function () {
   app.use(passport.session());
 });
 
+db.on('error', console.error.bind(console, 'mongoose conn error: '));
+db.once('open', function () {
+  console.log("Data store open");
+});
+
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (obj, done) {
+  done(null, obj);
+});
+
+passport.use(new GithubStrategy({
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  // callbackUrl: "http://" + process.env.IP + ":" + process.env.PORT + "/auth/github/cb"
+}, function (accessToken, refreshToken, profile, done) {
+    console.log("access token? ", accessToken);
+    process.nextTick(function () {
+
+      // To keep the example simple, the user's GitHub profile is returned to
+      // represent the logged-in user.  In a typical application, you would want
+      // to associate the GitHub account with a user record in your database,
+      // and return that user instead.
+      /*
+      User.findOrCreate({ githubId: profile.id }, function (err, user) {
+        return done(err, user);
+      });
+      */
+
+      var userData = { profile: profile, accessToken: accessToken }
+      return done(null, userData);
+    });
+  }
+));
+
+
+
 socket.on('connection', socks.onConnection);
 
 app.get('/', routes.home);
+app.get('/dash', ensureAuthenticated, routes.dashboard);
 app.get('/login/success', routes.loginSuccess);
-app.get('/auth/github', passport.authenticate('github'), routes.loginWithGithub);
-app.get('/auth/github/cb', passport.authenticate('github', { failureRedirect: '/fail' }), routes.loginWithGithubCb);
+app.get('/login/failure', routes.loginFailure);
+app.get('/auth/github', passport.authenticate('github', { scope: ['repo'] }), routes.loginWithGithub);
+app.get('/auth/github/cb', passport.authenticate('github', { failureRedirect: '/login/failure' }), routes.loginWithGithubCb);
 app.get('/logout', routes.logout);
 app.post('/githook', routes.githook);
 
@@ -92,7 +97,7 @@ app.post('/githook', routes.githook);
 //   login page.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  res.redirect('/#/login');
 }
 
 socket.installHandlers(sockServer, { prefix: '/connect' });
