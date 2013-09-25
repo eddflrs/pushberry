@@ -77,8 +77,6 @@ passport.use(new GithubStrategy({
   }
 ));
 
-
-
 socket.on('connection', socks.onConnection);
 
 app.get('/', routes.home);

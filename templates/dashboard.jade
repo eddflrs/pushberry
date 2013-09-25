@@ -27,6 +27,15 @@ block content
       span.blue-emphasis . 
   div.row
     h4.text-center Your GitHub Projects
-    a.btn.btn-primary#get-github-repos
-      span.glyphicon.glyphicon-refresh 
-      |    GitHub Repos
+
+  div.row(ng-controller="ProjectsCtrl")
+  
+    table(ng-init="fetchProjects()")
+      tr
+        th Repository
+        th Sync Status
+      tr(ng-repeat="project in projects")
+        td 
+          a(href="{{project.html_url}}", data-toggle="tooltip", title="{{project.description}}") {{project.name}}
+        td 
+          a.btn.btn-default.btn-xs Sync
