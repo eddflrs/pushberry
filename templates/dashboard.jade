@@ -22,20 +22,27 @@ block title
   title Your Dash
 
 block content
-  div.row
-    h1.text-center Hey, welcome back
-      span.blue-emphasis . 
-  div.row
-    h4.text-center Your GitHub Projects
 
   div.row(ng-controller="ProjectsCtrl")
   
-    table(ng-init="fetchProjects()")
-      tr
-        th Repository
-        th Sync Status
-      tr(ng-repeat="project in projects")
-        td 
-          a(href="{{project.html_url}}", data-toggle="tooltip", title="{{project.description}}") {{project.name}}
-        td 
-          a.btn.btn-default.btn-xs Sync
+    div.col-lg-8
+      h1.text-center Hey, welcome back
+        span.blue-emphasis . 
+      h4.text-center These are your GitHub Projects  
+    
+      input.form-control.vertically-spaced(type="search", placeholder="Search Repos", ng-model="search.name")
+      table.table.table-striped(ng-init="fetchProjects()")
+        tbody
+          tr
+            th.col-md-11 Repository
+            th.col-md-1 Status
+          tr(ng-controller="SyncingCtrl", ng-repeat="project in projects | filter:search")
+            td
+              a.repo(href="{{project.html_url}}", title="{{project.description}}") {{project.name}}
+            td
+              a.start.btn.btn-sm.fixed-width-btn-xs(data-loading-text="Syncing...", ng-class="{'btn-default': !synced, 'btn-primary': synced }", ng-init="setSyncText()", ng-click="sync($event)", ng-mouseover="toggleSyncText()", ng-mouseout="toggleSyncText()") {{syncText}}
+    div.col-lg-4.repo-activity 
+        h3.text-center Stats
+        ul.list-unstyled.text-center
+          li {{projects.length}} GitHub Projects
+          li {{syncedProjectsCount}} Synced Projects

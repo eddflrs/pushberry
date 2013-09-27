@@ -16,3 +16,27 @@
   color: #3E85C3;
   font-weight: bold;
 }
+
+.vertically-spaced {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.fixed-width-btn-xs {
+  width: 85px;
+}
+
+.repo {
+  font-size: 16px;
+}
+
+.repo-activity {
+  display: none;
+}
+
+@media(min-width: 1200px)  {
+  .repo-activity {
+     margin-top: 165px; 
+     display: block;
+  }
+}
